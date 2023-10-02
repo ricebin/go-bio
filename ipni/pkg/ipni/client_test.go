@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/go-bio/ipni/pkg/ipni"
+	"github.com/ricebin/go-bio/ipni/pkg/ipni"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

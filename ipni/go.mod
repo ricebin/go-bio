@@ -1,4 +1,4 @@
-module github.com/go-bio/ipni
+module github.com/ricebin/go-bio/ipni
 
 go 1.21
 
