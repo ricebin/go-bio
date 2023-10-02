@@ -22,9 +22,9 @@ jobs:
         go-version: '1.20'
 
     - name: Build ipni
-      working-directory: ./gobackend    
+      working-directory: ./ipni    
       run: go build -v ./...
 
     - name: Test ipni
-      working-directory: ./gobackend        
+      working-directory: ./ipni        
       run: go test -v ./...
