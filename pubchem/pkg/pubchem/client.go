@@ -10,10 +10,12 @@ import (
 )
 
 const (
+	// https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest#section=Compound-Property-Tables
 	molecularFormula = "MolecularFormula"
 	molecularWeight  = "MolecularWeight"
 	canonicalSMILES  = "CanonicalSMILES"
 
+	// https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest#section=Output
 	jsonFormat = "JSON"
 
 	baseCompoundUrlFormat = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/%s/property/%s/%s"
