@@ -28,3 +28,11 @@ jobs:
     - name: Test ipni
       working-directory: ./ipni        
       run: go test -v ./...
+
+    - name: Build pubchem
+      working-directory: ./pubchem
+      run: go build -v ./...
+
+    - name: Test pubchem
+      working-directory: ./pubchem
+      run: go test -v ./...
