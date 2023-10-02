@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestClient_Happy(t *testing.T) {
+func TestClient_GetCompounds(t *testing.T) {
 	c := pubchem.NewClient(http.DefaultClient)
 	out, err := c.GetCompounds(context.Background(), []uint32{6049, 1})
 	require.NoError(t, err)
@@ -28,5 +28,14 @@ func TestClient_Happy(t *testing.T) {
 		},
 	}
 
+	assert.Equal(t, expected, out)
+}
+
+func TestClient_GetCompoundComponents(t *testing.T) {
+	c := pubchem.NewClient(http.DefaultClient)
+	out, err := c.GetCompoundComponents(context.Background(), 24402)
+	require.NoError(t, err)
+
+	expected := []uint32{1004, 222}
 	assert.Equal(t, expected, out)
 }

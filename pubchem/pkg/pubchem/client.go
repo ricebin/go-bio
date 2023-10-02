@@ -18,7 +18,8 @@ const (
 	// https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest#section=Output
 	jsonFormat = "JSON"
 
-	baseCompoundUrlFormat = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/%s/property/%s/%s"
+	baseCompoundUrlFormat  = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/%s/property/%s/%s"
+	baseComponentUrlFormat = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/%d/cids/json?cids_type=component"
 )
 
 // https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
@@ -105,4 +106,37 @@ func (c *Client) GetCompounds(ctx context.Context, cids []uint32) (map[uint32]Co
 	}
 
 	return out, nil
+}
+
+func (c *Client) GetCompoundComponents(ctx context.Context, cid uint32) ([]uint32, error) {
+	componentsUrl := fmt.Sprintf(baseComponentUrlFormat, cid)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, componentsUrl, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.hc.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// {
+	//  "IdentifierList": {
+	//    "CID": [
+	//      1004,
+	//      222
+	//    ]
+	//  }
+	//}
+	type respType struct {
+		IdentifierList struct {
+			CID []uint32 `json:"CID"`
+		} `json:"IdentifierList"`
+	}
+	var respBody respType
+	if err := json.NewDecoder(resp.Body).Decode(&respBody); err != nil {
+		return nil, err
+	}
+	return respBody.IdentifierList.CID, nil
 }
